@@ -14,12 +14,12 @@ A::~A()
 
 void* A::operator new(std::size_t sz)
 {
-    return mem_mgr::Instance().CreateA();
+    return mem_mgr<A>::Instance().Create();
 }
 
 void A::operator delete(void* ptr, std::size_t sz)
 {
-    mem_mgr::Instance().Destroy(reinterpret_cast<A*> (ptr));
+    mem_mgr<A>::Instance().Destroy(reinterpret_cast<A*> (ptr));
 }
 
 void A::MakeSomeNoise() const
@@ -40,12 +40,12 @@ B::~B()
 
 void* B::operator new(std::size_t sz)
 {
-    return mem_mgr::Instance().CreateB();
+    return mem_mgr<B>::Instance().Create();
 }
 
 void B::operator delete(void* ptr, std::size_t sz)
 {
-    mem_mgr::Instance().Destroy(reinterpret_cast<B*> (ptr));
+    mem_mgr<B>::Instance().Destroy(reinterpret_cast<B*> (ptr));
 }
 
 void B::MakeSomeNoise() const
@@ -66,12 +66,12 @@ C::~C()
 
 void* C::operator new(std::size_t sz)
 {
-    return mem_mgr::Instance().CreateC();
+    return mem_mgr<C>::Instance().Create();
 }
 
 void C::operator delete(void* ptr, std::size_t sz)
 {
-    mem_mgr::Instance().Destroy(reinterpret_cast<C*> (ptr));
+    mem_mgr<C>::Instance().Destroy(reinterpret_cast<C*> (ptr));
 }
 
 void C::MakeSomeNoise() const

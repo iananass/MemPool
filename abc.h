@@ -27,7 +27,7 @@ public:
     static void operator delete(void* ptr, std::size_t sz);
     virtual void MakeSomeNoise() const;
 private:
-    int b;
+    int b,bb,bbb,bbbb;
 };
 
 class C : public A
