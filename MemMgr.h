@@ -1,9 +1,11 @@
+#ifndef __MemMgr__h__
+#define __MemMgr__h__
+
 #include <iostream>
 #include <list>
 #include <boost/intrusive/slist.hpp>
-#include "abc.h"
 
-template <class T>
+template <class T, int PoolSize>
 class mem_mgr
 {
 public:
@@ -28,27 +30,23 @@ private:
     boost::intrusive::slist<chunk, slist_hook> m_pool;
     chunk* m_chunks;
 
-    enum
-    {
-        PoolSize = 5
-    };
 };
 
-template <class T>
-mem_mgr<T>& mem_mgr<T>::Instance()
+template <class T, int PoolSize>
+mem_mgr<T, PoolSize>& mem_mgr<T, PoolSize>::Instance()
 {
-    static mem_mgr<T> mm;
+    static mem_mgr<T, PoolSize> mm;
     return mm;
 }
 
-template <class T>
-mem_mgr<T>::mem_mgr()
+template <class T, int PoolSize>
+mem_mgr<T, PoolSize>::mem_mgr()
 {
     m_chunks = new chunk [PoolSize];
 
 
-    std::cout << "sizeof(mem_mgr<T>::chunk) is" << sizeof (chunk) << std::endl;
-    std::cout << "sizeof(mem_mgr<T>::T) is" << sizeof (T) << std::endl;
+    std::cout << "sizeof(mem_mgr<T, PoolSize>::chunk) is" << sizeof (chunk) << std::endl;
+    std::cout << "sizeof(mem_mgr<T, PoolSize>::T) is" << sizeof (T) << std::endl;
 
     for (int i = 0; i < PoolSize; ++i) {
         m_pool.push_front(m_chunks[i]);
@@ -56,23 +54,25 @@ mem_mgr<T>::mem_mgr()
     }
 }
 
-template <class T>
-void* mem_mgr<T>::Create()
+template <class T, int PoolSize>
+void* mem_mgr<T, PoolSize>::Create()
 {
     void* ptr;
     if (m_pool.empty())
         ptr = 0;
     else
         ptr = reinterpret_cast<void*> (m_pool.front().mem);
-    std::cout << "Create A " << ptr << std::endl;
+    std::cout << "Create " << ptr << std::endl;
     m_pool.pop_front();
     return (ptr);
 }
 
-template <class T>
-void mem_mgr<T>::Destroy(T* obj)
+template <class T, int PoolSize>
+void mem_mgr<T, PoolSize>::Destroy(T* obj)
 {
-    std::cout << "destroy A " << obj << std::endl;
+    std::cout << "destroy " << obj << std::endl;
     chunk* area = (chunk*) ((char*) obj - offsetof(chunk, mem));
     m_pool.push_front(*area);
 }
+
+#endif

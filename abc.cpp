@@ -1,25 +1,19 @@
 #include "abc.h"
-#include "MemMgr.h"
+
 
 A::A()
-: a(1)
-{
-//    std::cout << __PRETTY_FUNCTION__ << "  " << this << std::endl;
-}
+: a(1) { }
 
-A::~A()
-{
-//    std::cout << __PRETTY_FUNCTION__ << "  " << this << std::endl;
-}
+A::~A() { }
 
 void* A::operator new(std::size_t sz)
 {
-    return mem_mgr<A>::Instance().Create();
+    return memmgr::Instance().Create();
 }
 
 void A::operator delete(void* ptr, std::size_t sz)
 {
-    mem_mgr<A>::Instance().Destroy(reinterpret_cast<A*> (ptr));
+    memmgr::Instance().Destroy(reinterpret_cast<A*> (ptr));
 }
 
 void A::MakeSomeNoise() const
@@ -28,24 +22,18 @@ void A::MakeSomeNoise() const
 }
 
 B::B()
-: b(2)
-{
-//    std::cout << __PRETTY_FUNCTION__ << "  " << this << std::endl;
-}
+: b(2) { }
 
-B::~B()
-{
-//    std::cout << __PRETTY_FUNCTION__ << "  " << this << std::endl;
-}
+B::~B() { }
 
 void* B::operator new(std::size_t sz)
 {
-    return mem_mgr<B>::Instance().Create();
+    return memmgr::Instance().Create();
 }
 
 void B::operator delete(void* ptr, std::size_t sz)
 {
-    mem_mgr<B>::Instance().Destroy(reinterpret_cast<B*> (ptr));
+    memmgr::Instance().Destroy(reinterpret_cast<B*> (ptr));
 }
 
 void B::MakeSomeNoise() const
@@ -54,24 +42,18 @@ void B::MakeSomeNoise() const
 }
 
 C::C()
-: c(3)
-{
-//    std::cout << __PRETTY_FUNCTION__ << "  " << this << std::endl;
-}
+: c(3) { }
 
-C::~C()
-{
-//    std::cout << __PRETTY_FUNCTION__ << "  " << this << std::endl;
-}
+C::~C() { }
 
 void* C::operator new(std::size_t sz)
 {
-    return mem_mgr<C>::Instance().Create();
+    return memmgr::Instance().Create();
 }
 
 void C::operator delete(void* ptr, std::size_t sz)
 {
-    mem_mgr<C>::Instance().Destroy(reinterpret_cast<C*> (ptr));
+    memmgr::Instance().Destroy(reinterpret_cast<C*> (ptr));
 }
 
 void C::MakeSomeNoise() const

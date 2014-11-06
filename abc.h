@@ -2,6 +2,7 @@
 #define ABC
 
 #include <cstdio>
+#include "MemMgr.h"
 
 class A
 {
@@ -14,6 +15,7 @@ public:
     static void operator delete(void* ptr, std::size_t sz);
     virtual void MakeSomeNoise() const;
 private:
+    typedef mem_mgr<A, 5> memmgr;
     int a;
 };
 
@@ -27,6 +29,7 @@ public:
     static void operator delete(void* ptr, std::size_t sz);
     virtual void MakeSomeNoise() const;
 private:
+    typedef mem_mgr<B, 5> memmgr;
     int b,bb,bbb,bbbb;
 };
 
@@ -40,6 +43,7 @@ public:
     static void operator delete(void* ptr, std::size_t sz);
     virtual void MakeSomeNoise() const;
 private:
+    typedef mem_mgr<C, 5> memmgr;
     int c;
 };
 
